@@ -16,12 +16,26 @@ App A actúa como el frontend o API Gateway para el servicio de procesamiento de
 ## Instalación
 
 1. Clona el repositorio:
-   git clone <URL_DEL_REPOSITORIO_APP_A>
-   cd app_a
+```bash
+git clone https://github.com/Kgtoledoc/app_a.git
+cd app_a
+
+```
+   
 2. Instala las dependencias:
-   pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
+
+```
+   
+
 3. Ejecuta la aplicación:
-   python app.py
+```bash
+python app.py
+
+```
+
+   
 ## Despliegue
 App A se despliega en un clúster de Kubernetes. El despliegue se gestiona a través de AWS CodeBuild y Amazon EKS.
 
