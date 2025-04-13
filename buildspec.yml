@@ -3,7 +3,9 @@ version: 0.2
 env:
   variables:
     ECR_REPO: "<ECR_REPO_URL>/app-a"
-    K8S_DEPLOYMENT: "k8s/app_a_deployment.yaml"
+    K8S_DEPLOYMENT: "k8s/deployment.yaml"
+    CLUSTER_NAME: "your-eks-cluster-name"
+    AWS_DEFAULT_REGION: "us-east-1"
 
 phases:
   install:
@@ -17,7 +19,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin <ECR_REPO_URL>
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin <ECR_REPO_URL>
       - TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
   build:
     commands:
@@ -31,5 +33,7 @@ phases:
       - docker push $ECR_REPO:$TAG
       - echo Updating Kubernetes deployment...
       - sed -i "s|<ECR_REPO_URL>/app-a:latest|$ECR_REPO:$TAG|g" $K8S_DEPLOYMENT
+      - echo Authenticating with EKS...
+      - aws eks update-kubeconfig --name $CLUSTER_NAME --region $AWS_DEFAULT_REGION
       - kubectl apply -f $K8S_DEPLOYMENT
-      - kubectl apply -f k8s/app_a_service.yaml
+      - kubectl apply -f k8s/service.yaml
