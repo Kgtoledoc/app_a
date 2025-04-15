@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package app_b;
+
+// El servicio de procesamiento de imágenes
+service ImageProcessor {
+  // Método para procesar una imagen
+  rpc ProcessImage (ImageRequest) returns (ImageResponse);
+}
+
+// Mensaje de solicitud que contiene la imagen
+message ImageRequest {
+  bytes image = 1;
+}
+
+// Mensaje de respuesta que contiene la imagen procesada
+message ImageResponse {
+  bytes image = 1;
+}
