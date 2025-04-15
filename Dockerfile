@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM public.ecr.aws/sam/build-python3.9:latest
 
 WORKDIR /app
 
