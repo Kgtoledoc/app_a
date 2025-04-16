@@ -11,7 +11,7 @@ def process_image():
     image = request.files['image'].read()
     
     # Crear un canal gRPC
-    channel = grpc.insecure_channel('app_b:50051')
+    channel = grpc.insecure_channel('app-b:50051')
     stub = image_processor_pb2_grpc.ImageProcessorStub(channel)
     
     # Enviar la imagen al servicio gRPC
